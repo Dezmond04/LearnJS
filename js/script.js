@@ -1,59 +1,28 @@
-'use scrict';
+let lang = "ru";
 
-let title = prompt('Как называется ваш проект'),
-    screens = prompt('Какие типы экранов нужно разработать?', 'Сложные'),
-    screenPrice = +prompt('Сколько будет стоить данная работа?'),
-      
-    rollback = 15,
-    discount,
-      
-    adaptive = confirm('Нужен ли адаптив на сайте?'),
-    service1 = prompt('Какой дополнительный тип услуги нужен?'),
-    servicePrice1 = +prompt('Сколько это будет стоить?'),
-    service2 = prompt('Какой дополнительный тип услуги нужен?'),
-    servicePrice2 = +prompt('Сколько это будет стоить?'),
-    fullPrice = screenPrice + servicePrice1 + servicePrice2,
-    rollbackPrice = fullPrice * (rollback / 100),
-    servicePercentPrice = Math.ceil(fullPrice - fullPrice * (rollback / 100));
-    
-switch (true) {
-  case fullPrice >= 30000:
-    discount = 10;
-    console.log('Даем скидку 10%');
-    break;
-  case fullPrice >= 15000 && fullPrice < 30000:
-    discount = 5;
-    console.log('Даем скидку 5%');
-    break;
-  case fullPrice < 15000 || fullPrice == 0:
-    discount = 0;
-    console.log('Скидка не предусмотрена');
-    break;
-  default:
-    console.log('Что то пошло не так');
+if (lang === 'ru') {
+  console.log('Понедельник, вторник, среда, четверг, пятница, суббота, воскресение.');
+} else if (lang === 'en') {
+  console.log('Monday, tuesday, wednesday, thursday, friday, saturday, sunday.');
+} else {
+  console.log('Что то пошло не так');
 }
-    
 
-console.log(typeof title);
-console.log(typeof fullPrice);
-console.log(typeof adaptive);
+switch (true) {
+  case lang === "ru":
+    console.log('Понедельник, вторник, среда, четверг, пятница, суббота, воскресение.');
+    break;
+  case lang === "en":
+    console.log('Monday, tuesday, wednesday, thursday, friday, saturday, sunday.');
+    break
+  default:
+    console.log('Что пошло не так');
+}
 
-console.log(screens.length);
+let array = [];
+array.ru = ['Понедельник, вторник, среда, четверг, пятница, суббота, воскресение.'];
+array.en = ['Monday, tuesday, wednesday, thursday, friday, saturday, sunday.'];
+console.log(array[lang]);
 
-console.log('Стоимость разработки экранов ' + screenPrice + ' долларов');
-console.log('Стоимость разработки сайта ' + fullPrice + ' долларов');
-
-console.log(screens.toLowerCase().split(', '));
-
-
-console.log('Итоговая скидка' + ' ' + (fullPrice * (discount / 100)));
-console.log('Итоговая цена посреднику' + ' ' + rollbackPrice);
-console.log('Итоговая цена за учетом вычета посреднику' + ' ' + servicePercentPrice);
-console.log('Итоговая цена за учетом вычета посреднику и с учетом скидки' + ' ' + (servicePercentPrice - (fullPrice * (discount / 100))));
-
-
-
-
-
-
-
+let namePerson = "Александр";
+namePerson === "Артем" ? console.log("директор") : namePerson === "Александр" ? console.log("преподаватель") : console.log("студент");
