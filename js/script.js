@@ -1,22 +1,36 @@
 'use scrict';
 
-let title = prompt('Как называется ваш проект'),
-    screens = prompt('Какие типы экранов нужно разработать?'),
-    screenPrice = +prompt('Сколько будет стоить данная работа?'),
-    adaptive = confirm('Нужен ли адаптив на сайте?'),
-    service1 = prompt('Какой дополнительный тип услуги нужен?'),
-    servicePrice1 = +prompt('Сколько это будет стоить?'),
-    service2 = prompt('Какой дополнительный тип услуги нужен?'),
-    servicePrice2 = +prompt('Сколько это будет стоить?'),
-      
+let title,
+    screens,
+    screenPrice,
+    adaptive,
+        
     rollback = 15,
+    
     discount,
     allServicePrices,
     fullPrice,
+    service1,
+    service2,
     servicePercentPrice,
-      
+        
     rollbackPrice = fullPrice * (rollback / 100);
     
+const isNumber = function (num) {
+  return !isNaN(parseFloat(num)) && isFinite(num) && !(/\s/g.test(num));
+};
+    
+const asking = function () {
+  title = prompt('Как называется ваш проект', 'Калькулятор верстки');
+  screens = prompt('Какие типы экранов нужно разработать?', 'Простые, сложные');
+  
+  do {
+    screenPrice = prompt('Сколько будет стоить данная работа?');
+  } while (!isNumber(screenPrice));
+  
+
+  adaptive = confirm('Нужен ли адаптив на сайте?');
+}
     
 const showTypeof = function (variable) {
   console.log(variable, typeof variable);
@@ -27,8 +41,27 @@ const getTitle = function (str) {
   return str[0].toUpperCase() + str.substring(1).toLowerCase();
 }
 
-const getAllServicePrices = function (service1, service2) {
-  return service1 + service2;
+const getAllServicePrices = function () {
+  // return service1 + service2;
+  let sum = 0;
+
+  for (let i = 0; i < 2; i++) {
+
+    if (i === 0) {
+      service1 = prompt('Какой дополнительный тип услуги нужен?');
+     
+    } else if (i === 1) {
+      service2 = prompt('Какой дополнительный тип услуги нужен?');       
+    }
+
+    price = prompt('Сколько это будет стоить?');
+
+    while ((!isNumber(price))) {
+    price = prompt('Сколько это будет стоить?');
+    }
+    sum += +price;
+  }
+  return sum;
 };
 
 function getFullPrice(price1, price2) {
@@ -55,20 +88,26 @@ const getRollbackMessage = function (price) {
   }
 };
 
+asking();
 
-allServicePrices = getAllServicePrices(servicePrice1, servicePrice2);
-fullPrice = getFullPrice(screenPrice, allServicePrices);
+allServicePrices = getAllServicePrices();
+fullPrice = getFullPrice(+screenPrice, allServicePrices);
 servicePercentPrice = getServicePercentPrices(fullPrice, rollback);
+title = getTitle(title);
+
 
 showTypeof(title);
-showTypeof(fullPrice);
+showTypeof(+fullPrice);
 showTypeof(adaptive);
 
-console.log(getTitle(title));
+console.log('allServicePrices', allServicePrices);
+
 console.log(getRollbackMessage(fullPrice));
+
 console.log(screens.length);
-console.log(screens.toLowerCase().split(', '));
-console.log('Стоимость разработки экранов ' + screenPrice + ' долларов');
-console.log('Стоимость дополнительных услуг ' + allServicePrices + ' долларов');
-console.log('Стоимость разработки сайта ' + fullPrice + ' долларов');
+
+console.log('Стоимость верстки экранов ' + screenPrice + ' долларов. ' + 'Стоимость разработки сайта ' + fullPrice + ' долларов');
+
 console.log('Итоговая цена за учетом вычета посреднику' + ' ' + servicePercentPrice);
+
+
