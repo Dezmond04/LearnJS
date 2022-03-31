@@ -1,8 +1,5 @@
 'use strict';
 
-let answer;
-let tryAgain;
-
 const isNamber = function (num) {
   return !isNaN(parseFloat(num)) && isFinite(num);
 };
@@ -10,6 +7,8 @@ const isNamber = function (num) {
 const gameBot = function () {
   const number = Math.floor(Math.random() * 100) + 1;
   let count = 10;
+  let answer;
+  let tryAgain;
 
   function game() {
     answer = +prompt('Угадай число от 1 до 100');
