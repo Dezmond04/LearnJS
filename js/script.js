@@ -1,41 +1,44 @@
-'use scrict';
+'use strict';
 
-let arr = ['257846', '784276', '35671', '689567', '2456723', '157686', '4256827'];
+let answer;
+let tryAgain;
 
-arr.forEach(function (item) {
-  if (item.startsWith('2') || item.startsWith('4')) {
-    console.log(item);
-  }
-});
+const isNamber = function (num) {
+  return !isNaN(parseFloat(num)) && isFinite(num);
+};
 
+const gameBot = function () {
+  const number = Math.floor(Math.random() * 100) + 1;
+  let count = 10;
 
-
-// const primeNumber = function () {
-
-//   for (let i = 2; i < 101; i++) {
-//     for (let e = 2; e <= i; e++) {
-//       const x = 2;
-//       if (i % e == 0 && i % x !== 0) {
-//         console.log(i + " Делители этого числа: 1 и " + i);
-//         break;
-//       }
-//     }
-//   }
-// };
-
-// primeNumber();
-
-
-let n = 100;
-for (let i = 2; i <= n; i++) {
-  let e = 1;
-  for (let j = 2; j <= i/2 && e == 1; j = j + 1) {
-     if (i % j == 0) {
-       e = 0;
-     }
-    }
+  function game() {
+    answer = +prompt('Угадай число от 1 до 100');
+    
+      if (!isNamber(answer)) {
+        alert('Введите число!');
+        game();
+      } else if (count === 0) {
+        tryAgain = confirm('Сыграем еще?');
+        if (tryAgain === true) {
+          gameBot();
+        } else {
+          alert('Спасибо за игру');
+        }
+      } else if (answer === 0) {
+        alert('Игра окончена');
+      } else if (answer > number) {
+        alert('Загаданное число меньше, осталось попыток ' + count);
+        count--;
+        game();
+      } else if (answer < number) {
+        alert('Загаданное число больше, осталось попыток ' + count);
+        count--;
+        game();
+      } else if (answer === number) {
+        alert('Поздравляю, Вы угадали!!!');
+      }
+   }
   
-  if (e == 1) {
-    console.log(i  + " Делители этого числа: 1 и " + i);
-  }
-}
+  game();
+};
+gameBot();
