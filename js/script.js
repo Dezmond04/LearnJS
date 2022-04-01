@@ -34,7 +34,11 @@ const gameBot = function () {
         count--;
         game();
       } else if (answer === number) {
-        alert('Поздравляю, Вы угадали!!!');
+          alert('Поздравляю, Вы угадали!!!');
+          tryAgain = confirm('Сыграем еще?');
+          if (tryAgain === true) {
+              gameBot();
+          }
       }
    }
   
