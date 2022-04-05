@@ -45,7 +45,7 @@ const appData = {
     
 
     for (let i = 0; i < 2; i++) {
-      name;
+      let name ;
       let price = 0;      
 
       do {
