@@ -1,88 +1,46 @@
 'use strict';
 
-const declOfNum = (number, titles) => {
-  const cases = [2, 0, 1, 1, 1, 2];
-  return titles[
-    (number % 100 > 4 && number % 100 < 20) ?
-    2 :
-    cases[(number % 10 < 5) ? number % 10 : 5]
-  ];
-};
+const book = document.querySelectorAll('.book');
+const body = document.querySelector('body');
+const titleBook = document.querySelectorAll('h2 > a');
+
+const adv = document.querySelector('.adv');
+
+const book2 = book[0].querySelectorAll('li');
+const book5 = book[5].querySelectorAll('li');
+const book6 = book[2].querySelectorAll('li');
 
 
-const getFullDate = () => {
-
-  const now = new Date();
-
-  const weekDays = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
-    weekDay = weekDays[now.getDay()];
-
-  const day = now.getDate();
-
-  const months = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Ноября', 'Декабря'],
-    month = months[now.getMonth()];
-
-  const year = now.getFullYear();
-
-  const hours = ['час', 'часа', 'часов'],
-    hour = now.getHours(),
-    declHours = declOfNum(hour, hours);
-
-  const minutes = ['минута', 'минуты', 'минут'],
-    minute = now.getMinutes(),
-    declMinutes = declOfNum(minute, minutes);
-
-  const seconds = ['секунда', 'секунды', 'секунд'],
-    second = now.getSeconds(),
-    declSeconds = declOfNum(second, seconds);
+const newLi = document.createElement('li');
 
 
-  return `Сегодня ${weekDay}, ${day} ${month} ${year} года, ${hour} ${declHours} ${minute} ${declMinutes} ${second} ${declSeconds}`;
-};
 
-const modifyZeroDigit = inputDigit => {
-  if (inputDigit >= 0 && inputDigit < 10) {
-    return '0' + inputDigit;
-  }
-  return inputDigit;
-};
+book[0].before(book[1]);
+book[0].after(book[4]);
+book[4].after(book[3]);
+book[3].after(book[5]);
+
+body.style.backgroundImage = 'url(image/you-dont-know-js.jpg)';
+
+titleBook[4].innerHTML = 'Книга 3. this и <strong>Прототипы</strong> Объектов';
+
+adv.remove();
 
 
-const getShortDate = () => {
-  const now = new Date();
+book2[8].after(book2[4]);
+book2[4].after(book2[5]);
+book2[5].after(book2[7]);
+book2[9].after(book2[2]);
 
-  const day = modifyZeroDigit(now.getDate());
-  const month = modifyZeroDigit(now.getMonth());
-  const year = modifyZeroDigit(now.getFullYear());
+book5[1].after(book5[9]);
+book5[9].after(book5[3]);
+book5[3].after(book5[4]);
+book5[7].after(book5[5]);
 
-  const hour = modifyZeroDigit(now.getHours());
-  const minute = modifyZeroDigit(now.getMinutes());
-  const second = modifyZeroDigit(now.getSeconds());
+newLi.textContent = 'Глава 8: За пределами ES6';
+book6[8].after(newLi);
 
-  return `${day}.${month}.${year} - ${hour}:${minute}:${second}`;
-};
 
-const createDateOnPage = () => {
-  const fullDate = document.createElement('p');
-  const shortDate = document.createElement('p');
+console.log(book6);
 
-  fullDate.innerHTML = getFullDate();
-  shortDate.innerHTML = getShortDate();
 
-  document.body.appendChild(fullDate);
-  document.body.appendChild(shortDate);
-};
-
-const eraseDate = (callback) => {
-  setTimeout(() => {
-    document.body.innerHTML = '';
-    callback();
-  }, 1000);
-};
-
-const refreshDate = () => {
-  createDateOnPage();
-  eraseDate(refreshDate);
-};
-
-eraseDate(refreshDate);
