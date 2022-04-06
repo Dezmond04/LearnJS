@@ -39,8 +39,3 @@ book5[7].after(book5[5]);
 
 newLi.textContent = 'Глава 8: За пределами ES6';
 book6[8].after(newLi);
-
-
-console.log(book6);
-
-
