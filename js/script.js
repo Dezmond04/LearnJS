@@ -1,192 +1,88 @@
 'use strict';
 
-const title = document.getElementsByTagName('h1')[0];
-
-const buttons = document.getElementsByClassName('handler_btn')
-const buttonStart = buttons[0];
-const buttonReset = buttons[1];
-const added = document.querySelector('.screen-btn');
-const number = document.querySelectorAll('.other-items.number');
-const percent = document.querySelectorAll('.other-items.percent');
-const input = document.querySelector('.rollback').querySelector('input');
-const rangeValue = document.querySelector('.rollback').querySelector('.range-value');
-const totalInput = document.getElementsByClassName('total-input');
-let screens = document.querySelector('.screen');
+const declOfNum = (number, titles) => {
+  const cases = [2, 0, 1, 1, 1, 2];
+  return titles[
+    (number % 100 > 4 && number % 100 < 20) ?
+    2 :
+    cases[(number % 10 < 5) ? number % 10 : 5]
+  ];
+};
 
 
-console.log(title);
-console.log(buttonStart);
-console.log(buttonReset); 
-console.log(added);
+const getFullDate = () => {
 
-number.forEach(function (item) {
-  console.log(item);
-});
-percent.forEach(function (item) {
-  console.log(item);
-});
+  const now = new Date();
 
-console.log(input);
-console.log(rangeValue);
+  const weekDays = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
+    weekDay = weekDays[now.getDay()];
 
-for (let input of totalInput) {
-  console.log(input);
-}
+  const day = now.getDate();
 
-console.log(screens);
+  const months = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Ноября', 'Декабря'],
+    month = months[now.getMonth()];
 
+  const year = now.getFullYear();
 
+  const hours = ['час', 'часа', 'часов'],
+    hour = now.getHours(),
+    declHours = declOfNum(hour, hours);
 
+  const minutes = ['минута', 'минуты', 'минут'],
+    minute = now.getMinutes(),
+    declMinutes = declOfNum(minute, minutes);
 
-
-
-
+  const seconds = ['секунда', 'секунды', 'секунд'],
+    second = now.getSeconds(),
+    declSeconds = declOfNum(second, seconds);
 
 
-// const appData = {
-//   title: '',
-//   screens: [],
-//   screenPrice: 0,
-//   adaptive: true,
-//   discount: '',
-//   allServicePrices: 0,
-//   fullPrice: 0,
-//   services: [],
-//   servicePercentPrice: 0,
-  
-//   rollback: 15,
-//   asking: function () {
-//     do {
-//       appData.title = prompt('Как называется ваш проект');
-//     } while (appData.isString(appData.title));
-    
-//     // appData.screens = prompt('Какие типы экранов нужно разработать?', 'Простые, сложные');
-    
-//     // do {
-//     //   appData.screenPrice = +prompt('Сколько будет стоить данная работа?');
-//     // } while (!appData.isNumber(appData.screenPrice));
+  return `Сегодня ${weekDay}, ${day} ${month} ${year} года, ${hour} ${declHours} ${minute} ${declMinutes} ${second} ${declSeconds}`;
+};
 
-//     for (let i = 0; i < 2; i++) {
-//       let name;
-//       let price = 0;
-      
-//       do {
-//         name = prompt('Какие типы экранов нужно разработать?', 'Простые, сложные');
-//       } while (appData.isString(name));
-
-//       do {
-//         price = prompt('Сколько будет стоить данная работа?');
-//       } while (!appData.isNumber(price));
-
-//       appData.screens.push({
-//         id: i,
-//         name: name,
-//         price: +price
-//       });
-//     }
-
-    
-
-//     for (let i = 0; i < 2; i++) {
-//       let name ;
-//       let price = 0;      
-
-//       do {
-//         name = prompt('Какой дополнительный тип услуги нужен?');
-//       } while ((appData.isString(name)));
-
-//       do {
-//         price = prompt('Сколько это будет стоить?');
-//       } while ((!appData.isNumber(price)));
-      
-//       appData.services.push({
-//         id: i,
-//         name: name,
-//         price: +price
-//       });
-
-//     }
-    
-  
-//     appData.adaptive = confirm('Нужен ли адаптив на сайте?');
-//   },
-
-//   addPrices: function () {
-//     // for (let screen of appData.screens) {
-//     //   appData.screenPrice += screen.price;
-//     // }
-//     appData.screenPrice = appData.screens.reduce(function (sum, item) {
-//       return sum + item.price;
-//     }, 0);
-//     for (let key of appData.services) {
-//       appData.allServicePrices += key.price;      
-//     }
-//   },
-
-    
-//   isNumber: function (num) {
-//     return !isNaN(parseFloat(num)) && isFinite(num) && !(/\s/g.test(num));
-//   },
-
-//   isString: function (str) {    
-//       return !isNaN(str);    
-//   },
-  
-  
-//   getTitle: function (str) {
-//     str = str.trim();
-//     appData.title = str[0].toUpperCase() + str.substring(1).toLowerCase();
-//   },
-  
-
-//   getFullPrice: function (price1, price2) {
-//     appData.fullPrice = price1 + price2;
-//   },
-
-//   getServicePercentPrices: function (price1, price2) {
-//     appData.servicePercentPrice = price1 - (price1 * (price2 / 100));
-//   },
-
-//   getRollbackMessage: function (price) {
-//     switch (true) {
-//       case price >= 30000:
-//         appData.discount = 10;
-//         return 'Даем скидку 10%';
-//       case price >= 15000 && price < 30000:
-//         appData.discount = 5;
-//         return 'Даем скидку 5%';
-//       case price < 15000 || price == 0:
-//         appData.discount = 0;
-//         return 'Скидка не предусмотрена';
-//       default:
-//         return 'Что то пошло не так';
-//     }
-//   },
-
-//   start: function () {
-//     appData.asking();
-//     appData.addPrices();
-//     appData.getTitle(appData.title);
-//     appData.getFullPrice(appData.screenPrice, appData.allServicePrices);
-//     appData.getServicePercentPrices(appData.fullPrice, appData.rollback);
-//     appData.getRollbackMessage(appData.fullPrice);
-//     appData.loger();
-//   },
-
-//   loger: function () {
-//     // for (let key in appData) {
-//     //   console.log('Ключ: ' + key + ' Значение: ' + appData[key]);
-//     // }    
-//     console.log(appData.services);
-//     console.log(appData.screens);
-//     console.log(appData.fullPrice);
-//     console.log(appData.servicePercentPrice);
-
-//   },
-// };
-// appData.start();
+const modifyZeroDigit = inputDigit => {
+  if (inputDigit >= 0 && inputDigit < 10) {
+    return '0' + inputDigit;
+  }
+  return inputDigit;
+};
 
 
+const getShortDate = () => {
+  const now = new Date();
 
+  const day = modifyZeroDigit(now.getDate());
+  const month = modifyZeroDigit(now.getMonth());
+  const year = modifyZeroDigit(now.getFullYear());
 
+  const hour = modifyZeroDigit(now.getHours());
+  const minute = modifyZeroDigit(now.getMinutes());
+  const second = modifyZeroDigit(now.getSeconds());
 
+  return `${day}.${month}.${year} - ${hour}:${minute}:${second}`;
+};
+
+const createDateOnPage = () => {
+  const fullDate = document.createElement('p');
+  const shortDate = document.createElement('p');
+
+  fullDate.innerHTML = getFullDate();
+  shortDate.innerHTML = getShortDate();
+
+  document.body.appendChild(fullDate);
+  document.body.appendChild(shortDate);
+};
+
+const eraseDate = (callback) => {
+  setTimeout(() => {
+    document.body.innerHTML = '';
+    callback();
+  }, 1000);
+};
+
+const refreshDate = () => {
+  createDateOnPage();
+  eraseDate(refreshDate);
+};
+
+eraseDate(refreshDate);
