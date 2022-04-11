@@ -128,7 +128,10 @@ const appData = {
   
   getRollback: function () {
     rangeValue.textContent = range.value + '%';
-    appData.rollback = +range.value;
+    appData.rollback = +range.value;  
+    appData.servicePercentPrice = appData.fullPrice - (appData.fullPrice * (appData.rollback / 100));    
+    totalCountRollback.value = appData.servicePercentPrice;
+    
   },
 
   addPrices: function () {
