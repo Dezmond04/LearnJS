@@ -59,43 +59,28 @@ const appData = {
     
   },
 
-  isEmtyScreens: function(){
-    const screenSelect = document.querySelectorAll('.screen select');
-    const screenInput = document.querySelectorAll('.screen input');
-    // screenSelect.forEach(function (item) {
-    //   if (item.value == '') {
-    //     alert('123');
-    //   } else {
-    //     appData.start();
-    //     }
-    //   } 
-    // );  
-    let a = true;
-    let b = true;
-    for (let select of screenSelect) {
-      if (select.value == '') {
-        a = false;
-        break;
+  isEmtyScreens: function () {    
+    let isValueEmty = true;
+    screens.forEach(function (screen) {
+      const select = screen.querySelector('select');
+      const input = screen.querySelector('input');
+      if (select.value === '' || input.value === '') {
+        isValueEmty = false;
       }
-    }
-    for (let key of screenInput) {
-      if (key.value == '') {
-          b = false;
-        break;
-      }      
-    }
-    if (a === true && b === true) {
+    });
+    if (isValueEmty === true) {
       appData.start();
-  }
-    
+    }
   },
+    
+    
 
   addScreens: function () {
     screens.forEach(function (screen, index) {
       const select = screen.querySelector('select');
       const input = screen.querySelector('input');
       const selectName = select.options[select.selectedIndex].textContent;
-
+      
       appData.screens.push({
         id: index,
         name: selectName,
