@@ -37,6 +37,7 @@ const appData = {
   
   rollback: 0,
   init: function () {
+    
     appData.addTitle();   
     added.addEventListener('click', appData.addScreenBlock);  
     range.addEventListener('input', appData.getRollback);
