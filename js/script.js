@@ -130,7 +130,7 @@ const appData = {
     rangeValue.textContent = range.value + '%';
     appData.rollback = +range.value;  
     appData.servicePercentPrice = appData.fullPrice - (appData.fullPrice * (appData.rollback / 100));    
-    totalCountRollback.value = appData.servicePercentPrice;
+    totalCountRollback.value = Math.round(appData.servicePercentPrice);
     
   },
 
@@ -156,7 +156,7 @@ const appData = {
     totalCount.value = appData.totalScreensCount;
     totalCountOther.value = appData.servicePricesPercent + appData.servicePricesNumber;
     fullCountOther.value = appData.fullPrice;
-    totalCountRollback.value = appData.servicePercentPrice;
+    totalCountRollback.value = Math.round(appData.servicePercentPrice);
   },
 
   // getServicePercentPrices: function (price1, price2) {
