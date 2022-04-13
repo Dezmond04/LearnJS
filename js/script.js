@@ -66,6 +66,7 @@ const appData = {
     } else {
       cmsInput.style.display = 'none';
 
+
     }
 
   },
@@ -86,7 +87,6 @@ const appData = {
     this.addServices();
     this.addPrices();
     this.getTotalScreensCount();
-    this.getCmsPrice();
     // appData.getServicePercentPrices(appData.fullPrice, appData.rollback);
     // appData.loger();
     this.showResult();
@@ -133,8 +133,11 @@ const appData = {
       const check = item.querySelector('input[type=checkbox]');
       check.setAttribute('disabled', 'true');
     });
-
     cmsOpen.setAttribute('disabled', 'true');
+    cmsOtherInput.setAttribute('disabled', 'true');
+    cmsSelect.setAttribute('disabled', 'true');
+
+
     buttonStart.style.display = 'none';
     buttonReset.style.display = 'inline-block';
   },
@@ -142,6 +145,8 @@ const appData = {
   resetHiden: function () {
     buttonStart.style.display = 'inline-block';
     buttonReset.style.display = 'none';
+    cmsInput.style.display = 'none';
+    cmsVariable.style.display = 'none';
   },
 
   addScreens: function () {
@@ -192,14 +197,6 @@ const appData = {
     screens[screens.length - 1].after(cloneScreens);
     screens = document.querySelectorAll('.screen');
   },
-  getCmsPrice: function () {
-    if (cmsSelect.value == '50') {
-      appData.cmsPrice += (appData.fullPrice * (50 / 100));
-    } else if (cmsSelect.value == 'other') {
-      appData.cmsPrice += (appData.fullPrice * (cmsOtherInput.value / 100));
-      console.log(appData.cmsPrice);
-    }
-  },
 
   getRollback: function () {
     rangeValue.textContent = range.value + '%';
@@ -226,7 +223,6 @@ const appData = {
       const check = item.querySelector('input[type=checkbox]');
       check.removeAttribute('disabled');
       check.checked = false;
-
     });
     number.forEach((item) => {
       const check = item.querySelector('input[type=checkbox]');
@@ -234,6 +230,10 @@ const appData = {
       check.checked = false;
     });
     cmsOpen.removeAttribute('disabled');
+    cmsOtherInput.removeAttribute('disabled');
+    cmsSelect.removeAttribute('disabled');
+    cmsOtherInput.value = '';
+    cmsSelect.value = '';
     cmsOpen.checked = false;
     range.value = 0;
     rangeValue.textContent = 0 + '%';
@@ -276,7 +276,17 @@ const appData = {
     for (let key in this.servicesPercent) {
       this.servicePricesPercent += this.screenPrice * (this.servicesPercent[key] / 100);
     }
-    this.fullPrice = +this.screenPrice + this.servicePricesNumber + this.servicePricesPercent;
+    if (cmsSelect.value == '50') {
+      this.fullPrice = +this.screenPrice + this.servicePricesNumber + this.servicePricesPercent;
+      this.fullPrice += this.fullPrice * (50 / 100);
+    } else if (cmsSelect.value == 'other') {
+      this.fullPrice = (+this.screenPrice + this.servicePricesNumber + this.servicePricesPercent);
+      this.fullPrice += this.fullPrice * (cmsOtherInput.value / 100);
+      console.log(appData.cmsPrice);
+    } else {
+      this.fullPrice = +this.screenPrice + this.servicePricesNumber + this.servicePricesPercent;
+
+    }
     this.servicePercentPrice = this.fullPrice - (this.fullPrice * (this.rollback / 100));
   },
 
@@ -284,7 +294,7 @@ const appData = {
     total.value = this.screenPrice;
     totalCount.value = this.totalScreensCount;
     totalCountOther.value = this.servicePricesPercent + this.servicePricesNumber;
-    fullCountOther.value = this.fullPrice + this.cmsPrice;
+    fullCountOther.value = this.fullPrice;
     totalCountRollback.value = Math.round(appData.servicePercentPrice);
   },
 
