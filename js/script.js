@@ -46,13 +46,14 @@ const appData = {
 
   rollback: 0,
   init: function () {
+
     this.addTitle();
-    cmsOpen.addEventListener('click', this.cmsToggle);
-    cmsSelect.addEventListener('input', this.checkCms);
-    added.addEventListener('click', this.addScreenBlock);
-    range.addEventListener('input', this.getRollback);
-    buttonStart.addEventListener('click', this.isEmtyScreens);
-    buttonReset.addEventListener('click', this.reset);
+    cmsOpen.addEventListener('click', this.cmsToggle.bind(appData));
+    cmsSelect.addEventListener('input', this.checkCms.bind(appData));
+    added.addEventListener('click', this.addScreenBlock.bind(appData));
+    range.addEventListener('input', this.getRollback.bind(appData));
+    buttonStart.addEventListener('click', this.isEmtyScreens.bind(appData));
+    buttonReset.addEventListener('click', this.reset.bind(appData));
   },
 
   addTitle: function () {
@@ -64,11 +65,9 @@ const appData = {
       cmsInput.style.display = 'block';
     } else {
       cmsInput.style.display = 'none';
-
-
     }
-
   },
+
 
   cmsToggle: function () {
     if (cmsOpen.checked) {
@@ -90,12 +89,11 @@ const appData = {
     this.startHiden();
   },
   reset: function () {
-    console.log(this);
-    appData.resetScreens();
-    appData.resetCheckbox();
-    appData.resetTotalInput();
-    appData.resetHiden();
-    appData.resetObj();
+    this.resetScreens();
+    this.resetCheckbox();
+    this.resetTotalInput();
+    this.resetHiden();
+    this.resetObj();
   },
 
   isEmtyScreens: function () {
@@ -108,7 +106,7 @@ const appData = {
       }
     });
     if (isValueEmty === true) {
-      appData.start();
+      this.start();
     }
   },
 
@@ -194,9 +192,9 @@ const appData = {
 
   getRollback: function () {
     rangeValue.textContent = range.value + '%';
-    appData.rollback = +range.value;
-    appData.servicePercentPrice = appData.fullPrice - (appData.fullPrice * (appData.rollback / 100));
-    totalCountRollback.value = Math.round(appData.servicePercentPrice);
+    this.rollback = +range.value;
+    this.servicePercentPrice = this.fullPrice - (this.fullPrice * (this.rollback / 100));
+    totalCountRollback.value = Math.round(this.servicePercentPrice);
 
   },
   resetScreens: function () {
