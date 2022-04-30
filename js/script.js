@@ -1,12 +1,27 @@
 'use scrict';
 
-let title,
-    screens,
-    screenPrice,
-    rollback,
-    fullPrice,
-    adaptive;
+class First {
+    constructor () {
 
-alert('Hello!');
+    }
+    hello() {
+        console.log('Привет, я метод родителя');
+    }
+}
 
-console.log('Hello, world!');
+const first = new First();
+
+class Second extends First {    
+    sayHello() {
+        super.hello();
+        console.log('А я наследуемый метод');
+    }
+}
+
+const second = new Second();
+
+second.sayHello();
+
+
+
+
